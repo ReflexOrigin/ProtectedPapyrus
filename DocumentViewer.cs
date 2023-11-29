@@ -27,14 +27,14 @@ namespace ProjectPapyrus
             
             selectedFileName = fileName;
 
-            string connectionString = "Server=tcp:projectusprotectedpapyrus.database.windows.net,1433;Initial Catalog=ProtectedPapyrus;Persist Security Info=False;User ID=reflexorigin;Password=waytoGO.1;MultipleActiveResultSets=true;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            string connectionString = "Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;MultipleActiveResultSets=True;User ID=reflexorigin;Password=waytoGO.1;";
             connection = new SqlConnection(connectionString);
             connection.Open();
         }
 
         private void HandleDocumentViewerLoad(object sender, EventArgs e)
         {
-            
+
 
             byte[] binaryData = GetBinaryDataForAttachment(selectedFileName);
             string contentType = GetContentTypeForAttachment(selectedFileName);
@@ -75,15 +75,18 @@ namespace ProjectPapyrus
         {
             string contentType = null;
 
-             using (SqlCommand command = new SqlCommand("SELECT ContentType FROM Attachments WHERE FileName = @FileName", connection))
-             {
-                 command.Parameters.AddWithValue("@FileName", fileName);
-                 SqlDataReader reader = command.ExecuteReader();
-                 if (reader.Read())
-                 {
-                     contentType = reader["ContentType"].ToString();
-                 }
-             }
+            using (SqlCommand selectContentTypeCommand = new SqlCommand("SELECT ContentType FROM Attachments WHERE FileName = @FileName", connection))
+            {
+                selectContentTypeCommand.Parameters.AddWithValue("@FileName", fileName);
+
+                using (SqlDataReader contentTypeReader = selectContentTypeCommand.ExecuteReader())
+                {
+                    if (contentTypeReader.Read())
+                    {
+                        contentType = contentTypeReader["ContentType"].ToString();
+                    }
+                }
+            }
 
             return contentType;
         }

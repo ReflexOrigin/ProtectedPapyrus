@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,11 +9,9 @@ namespace ProjectPapyrus
 {
     internal static class Program
     {
-        static bool previousInternetConnection = true;
-        static bool messageSent = false;
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        private static bool previousInternetConnection = true;
+        private static bool messageSent = false;
+
         [STAThread]
         static void Main()
         {
@@ -26,59 +23,68 @@ namespace ProjectPapyrus
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
 
+            // Start the main loop asynchronously
+            Task.Run(() => MainLoopAsync());
+
+            Application.Run(new Login());
+        }
+
+        private static bool IsInternetAvailable()
+        {
+            return NetworkInterface.GetIsNetworkAvailable();
+        }
+
+        private static async Task MainLoopAsync()
+        {
             while (true)
             {
-                bool currentInternetConnection = CheckInternetConnection();
+                bool currentInternetConnection = await IsInternetAvailableAsync();
 
-                if (currentInternetConnection != previousInternetConnection)
+                if (!currentInternetConnection && previousInternetConnection)
                 {
                     if (!messageSent)
                     {
-                        DisplayInternetStatusMessage(currentInternetConnection);
+                        DisplayInternetStatusMessage(false);
                         messageSent = true;
                     }
                 }
-                else
+                else if (currentInternetConnection && !previousInternetConnection)
                 {
+                    // Internet reconnected
+                    DisplayInternetStatusMessage(true);
                     messageSent = false;
                 }
 
                 previousInternetConnection = currentInternetConnection;
 
-                Thread.Sleep(1000);
+                await Task.Delay(1000);
             }
-
         }
 
-        static bool IsInternetAvailable()
+        private static async Task<bool> IsInternetAvailableAsync()
         {
-            return NetworkInterface.GetIsNetworkAvailable();
-        }
-
-        static bool CheckInternetConnection()
-        {
-            string targetHost = "google.com";
-            Ping ping = new Ping();
             try
             {
-                PingReply reply = ping.Send(targetHost);
-                return reply.Status == IPStatus.Success;
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync("https://www.google.com", HttpCompletionOption.ResponseHeadersRead))
+                {
+                    return response.IsSuccessStatusCode;
+                }
             }
-            catch (PingException)
+            catch
             {
                 return false;
             }
         }
 
-        static void DisplayInternetStatusMessage(bool isConnected)
+        private static void DisplayInternetStatusMessage(bool isConnected)
         {
             string statusMessage = isConnected
-                ? "Internet connection restored."
-                : "Internet connection lost.";
+                ? "Internet connection is available."
+                : "No internet connection. Please check your network.";
 
-            Console.WriteLine(statusMessage);
+            MessageBox.Show(statusMessage, "Internet Status", MessageBoxButtons.OK, isConnected ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
     }
 }

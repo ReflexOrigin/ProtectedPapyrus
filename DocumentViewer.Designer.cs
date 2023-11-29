@@ -43,7 +43,7 @@
             this.ViewImage.Location = new System.Drawing.Point(0, 0);
             this.ViewImage.Margin = new System.Windows.Forms.Padding(0);
             this.ViewImage.Name = "ViewImage";
-            this.ViewImage.Size = new System.Drawing.Size(893, 450);
+            this.ViewImage.Size = new System.Drawing.Size(1346, 719);
             this.ViewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.ViewImage.TabIndex = 0;
             this.ViewImage.TabStop = false;
@@ -56,7 +56,7 @@
             this.ViewWeb.Margin = new System.Windows.Forms.Padding(0);
             this.ViewWeb.MinimumSize = new System.Drawing.Size(20, 20);
             this.ViewWeb.Name = "ViewWeb";
-            this.ViewWeb.Size = new System.Drawing.Size(893, 450);
+            this.ViewWeb.Size = new System.Drawing.Size(1346, 719);
             this.ViewWeb.TabIndex = 1;
             this.ViewWeb.Visible = false;
             // 
@@ -67,7 +67,7 @@
             this.PdfViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PdfViewer.Location = new System.Drawing.Point(0, 0);
             this.PdfViewer.Name = "PdfViewer";
-            this.PdfViewer.Size = new System.Drawing.Size(893, 450);
+            this.PdfViewer.Size = new System.Drawing.Size(1346, 719);
             this.PdfViewer.TabIndex = 2;
             this.PdfViewer.Visible = false;
             this.PdfViewer.Load += new System.EventHandler(this.PdfViewer_Load);
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(893, 450);
+            this.ClientSize = new System.Drawing.Size(1346, 719);
             this.Controls.Add(this.PdfViewer);
             this.Controls.Add(this.ViewWeb);
             this.Controls.Add(this.ViewImage);

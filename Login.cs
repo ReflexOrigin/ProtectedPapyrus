@@ -8,12 +8,13 @@ using System.Drawing;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-
 
 
 namespace ProjectPapyrus
@@ -22,19 +23,18 @@ namespace ProjectPapyrus
     {
         private SqlConnection connection;
 
-        
-
         public Login()
         {
             InitializeComponent();
             control.SetIntial(this);
             textBox3.TextChanged += textBox3_TextChanged;
 
-            string connectionString = "Server=tcp:projectusprotectedpapyrus.database.windows.net,1433;Initial Catalog=ProtectedPapyrus;Persist Security Info=False;User ID=reflexorigin;Password=waytoGO.1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            string connectionString = "Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;User ID=reflexorigin;Password=waytoGO.1;Connect Timeout=30;";
             connection = new SqlConnection(connectionString);
             connection.Open();
         }
-       
+
+
         private void button4_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -84,12 +84,26 @@ namespace ProjectPapyrus
             pnlForget.Visible = true;
         }
 
+        private Guid userID = Guid.Empty;
+
         private void label4_Click(object sender, EventArgs e)
         {
-
             pnlLogo.Dock = DockStyle.Right;
             pnlSignup.Visible = true;
+
+            // Use the class-level userID
+            userID = Guid.NewGuid();
+
+            string insertQuery = "INSERT INTO [user] (userID) VALUES (@userID)";
+
+            using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+            {
+                insertCommand.Parameters.Add(new SqlParameter("@userID", SqlDbType.UniqueIdentifier) { Value = userID });
+                insertCommand.ExecuteNonQuery();
+            }
         }
+
+
 
         private bool VerifyPassword(string enteredPassword, string storedPassword, string salt)
         {
@@ -97,12 +111,13 @@ namespace ProjectPapyrus
             return storedPassword.Equals(enteredPasswordHash);
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
             string username = textBox1.Text;
             string enteredPassword = textBox2.Text; // The password entered by the user
 
-                string selectQuery = "SELECT Password, PasswordSalt FROM user_info WHERE Name = @Name";
+                string selectQuery = "SELECT userID , Password, PasswordSalt FROM user_info WHERE Name = @Name";
 
                 using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
                 {
@@ -114,11 +129,15 @@ namespace ProjectPapyrus
                         {
                             string storedPassword = reader["Password"].ToString();
                             string passwordSalt = reader["PasswordSalt"].ToString();
+                            userID = reader.GetGuid(reader.GetOrdinal("UserID"));
 
+                            if (userID != Guid.Empty)
+                            {
+                            UserManager.SetUserID(userID);
+                            }
                             // Verify the entered password against the stored password
                             if (VerifyPassword(enteredPassword, storedPassword, passwordSalt))
                             {
-                                MessageBox.Show("Sign-in successful.");
                                 this.Hide();
                                 var menu = new Menu();
                                 menu.Show();
@@ -178,7 +197,7 @@ namespace ProjectPapyrus
 
         private async Task<bool> CheckUsernameAvailabilityAsync(string username)
         {
-            using (SqlConnection connection = new SqlConnection("Server=tcp:projectusprotectedpapyrus.database.windows.net,1433;Initial Catalog=ProtectedPapyrus;Persist Security Info=False;User ID=reflexorigin;Password=waytoGO.1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            using (SqlConnection connection = new SqlConnection("Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;User ID=reflexorigin;Password=waytoGO.1;Connect Timeout=30;"))
             {
                 await connection.OpenAsync();
 
@@ -200,36 +219,40 @@ namespace ProjectPapyrus
             string confirmPassword = textBox6.Text;
 
             bool doPasswordsMatch = (password == confirmPassword);
-
             bool isPasswordValid = IsPasswordValid(password);
 
-            if (doPasswordsMatch && isPasswordValid)
+            if (isPasswordValid)
             {
-                   
-            }
-            else if (!isPasswordValid)
-            {
-                passCon.Text = "Passwords do not meet the conditions.";
-                passCon.ForeColor = Color.Red;
+                passCon.Visible = false;
             }
             else
             {
+                passCon.Visible = true;
+                passCon.Text = "Must Contain upper_case, lower_case , digit , special";
+                passCon.ForeColor = Color.Red; 
+            }
+            if (!doPasswordsMatch)
+            {
+                passwordStatusLabel.Visible = !doPasswordsMatch;
                 passwordStatusLabel.Text = "Passwords do not match.";
                 passwordStatusLabel.ForeColor = Color.Red;
+            }
+            else
+            {
+                passwordStatusLabel.Visible = false;
             }
 
             EnableSignupButtonIfConditionsMet();
         }
 
+
         private bool IsPasswordValid(string password)
         {
-  
-            bool hasDigit = password.Any(char.IsDigit);
-            bool hasUpper = password.Any(char.IsUpper);
-            bool hasLower = password.Any(char.IsLower);
-            bool hasSpecial = password.Any(c => !char.IsLetterOrDigit(c));
+            return password.Any(char.IsDigit) &&
+                    password.Any(char.IsUpper) &&
+                    password.Any(char.IsLower) &&
+                    password.Any(c => "!@#$%^&*()-_+=<>? ".Contains(c));
 
-            return hasDigit && hasUpper && hasLower && hasSpecial;
         }
 
         private void EnableSignupButtonIfConditionsMet()
@@ -265,7 +288,7 @@ namespace ProjectPapyrus
             }
             if (textBox6.Text == "Confirm Password") // get username from database
             {
-                lblConPass.Visible = true;
+               // lblConPass.Visible = true;
                 return;
             }
 
@@ -340,7 +363,7 @@ namespace ProjectPapyrus
 
                 string hashedMasterPassword = HashPassword(masterPassword, masterPasswordSalt);
 
-                    string insertQuery = "INSERT INTO user_info (Name, Password, Master_Password, PasswordSalt, MasterPasswordSalt) VALUES (@Name, @Password, @MasterPassword, @PasswordSalt, @MasterPasswordSalt)";
+                    string insertQuery = "INSERT INTO user_info (Name, Password, Master_Password, PasswordSalt, MasterPasswordSalt , userID) VALUES (@Name, @Password, @MasterPassword, @PasswordSalt, @MasterPasswordSalt, @userID)";
 
                     using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                     {
@@ -349,12 +372,13 @@ namespace ProjectPapyrus
                         insertCommand.Parameters.AddWithValue("@MasterPassword", hashedMasterPassword);
                         insertCommand.Parameters.AddWithValue("@PasswordSalt", passwordSalt);
                         insertCommand.Parameters.AddWithValue("@MasterPasswordSalt", masterPasswordSalt);
+                        insertCommand.Parameters.Add(new SqlParameter("@userID", SqlDbType.UniqueIdentifier) { Value = userID });
 
-                        int rowsAffected = insertCommand.ExecuteNonQuery();
+                    int rowsAffected = insertCommand.ExecuteNonQuery();
 
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Registration successful.");
+
                         }
                         else
                         {
@@ -548,13 +572,10 @@ namespace ProjectPapyrus
             }
 
 
-            // Generate a random salt for the user's new password
             string newPasswordSalt = GenerateRandomSalt();
 
-            // Hash the user's new password using the generated salt
             string hashedPassword = HashPassword(newPassword, newPasswordSalt);
 
-            // Update the stored password hash and salt in the database
             string updateQuery = "UPDATE user_info SET Password = @Password, PasswordSalt = @PasswordSalt WHERE Name = @Name";
 ;
                 using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
@@ -679,7 +700,23 @@ namespace ProjectPapyrus
             this.Opacity = 0.7;
         }
 
-        
+        private void lblPassword_Click(object sender, EventArgs e)
+        {
+            if(lblPassword == null)
+            {
+                lblPassword.Visible = true;
+            }
+            else { lblPassword.Visible = false; }
+        }
+
+        private void lblConPass_Click(object sender, EventArgs e)
+        {
+            if(lblConPass == null)
+            {
+                lblConPass.Visible = true;
+            }
+            else lblConPass.Visible = false;
+        }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {

@@ -206,10 +206,11 @@
             this.pnlForget.Controls.Add(this.panel20);
             this.pnlForget.Controls.Add(this.panel22);
             this.pnlForget.Controls.Add(this.label16);
+            this.pnlForget.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlForget.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlForget.Location = new System.Drawing.Point(0, 0);
             this.pnlForget.Name = "pnlForget";
-            this.pnlForget.Size = new System.Drawing.Size(79, 69);
+            this.pnlForget.Size = new System.Drawing.Size(655, 458);
             this.pnlForget.TabIndex = 15;
             this.pnlForget.Visible = false;
             // 
@@ -223,7 +224,7 @@
             this.Continue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Continue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Continue.ForeColor = System.Drawing.Color.Lime;
-            this.Continue.Location = new System.Drawing.Point(-61, 118);
+            this.Continue.Location = new System.Drawing.Point(227, 313);
             this.Continue.Name = "Continue";
             this.Continue.Size = new System.Drawing.Size(214, 42);
             this.Continue.TabIndex = 24;
@@ -252,7 +253,7 @@
             this.newPw.Controls.Add(this.panel17);
             this.newPw.Controls.Add(this.fgetNewPw);
             this.newPw.Controls.Add(this.label12);
-            this.newPw.Location = new System.Drawing.Point(-223, -52);
+            this.newPw.Location = new System.Drawing.Point(65, 143);
             this.newPw.Name = "newPw";
             this.newPw.Size = new System.Drawing.Size(552, 67);
             this.newPw.TabIndex = 22;
@@ -314,7 +315,7 @@
             this.Verify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Verify.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Verify.ForeColor = System.Drawing.Color.Lime;
-            this.Verify.Location = new System.Drawing.Point(-61, 118);
+            this.Verify.Location = new System.Drawing.Point(227, 313);
             this.Verify.Name = "Verify";
             this.Verify.Size = new System.Drawing.Size(214, 42);
             this.Verify.TabIndex = 21;
@@ -329,7 +330,7 @@
             this.conNewPw.Controls.Add(this.panel19);
             this.conNewPw.Controls.Add(this.fgetConPw);
             this.conNewPw.Controls.Add(this.label13);
-            this.conNewPw.Location = new System.Drawing.Point(-225, 35);
+            this.conNewPw.Location = new System.Drawing.Point(63, 230);
             this.conNewPw.Name = "conNewPw";
             this.conNewPw.Size = new System.Drawing.Size(552, 67);
             this.conNewPw.TabIndex = 20;
@@ -389,7 +390,7 @@
             this.panel20.Controls.Add(this.panel21);
             this.panel20.Controls.Add(this.fgetMasterPw);
             this.panel20.Controls.Add(this.label14);
-            this.panel20.Location = new System.Drawing.Point(-223, 36);
+            this.panel20.Location = new System.Drawing.Point(65, 231);
             this.panel20.Name = "panel20";
             this.panel20.Size = new System.Drawing.Size(552, 67);
             this.panel20.TabIndex = 19;
@@ -460,7 +461,7 @@
             this.panel22.Controls.Add(this.panel23);
             this.panel22.Controls.Add(this.fgetUser);
             this.panel22.Controls.Add(this.label15);
-            this.panel22.Location = new System.Drawing.Point(-223, -51);
+            this.panel22.Location = new System.Drawing.Point(65, 144);
             this.panel22.Name = "panel22";
             this.panel22.Size = new System.Drawing.Size(552, 67);
             this.panel22.TabIndex = 17;
@@ -516,7 +517,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(-61, -150);
+            this.label16.Location = new System.Drawing.Point(227, 45);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(228, 31);
             this.label16.TabIndex = 18;
@@ -603,6 +604,7 @@
             this.lblPassword.TabIndex = 12;
             this.lblPassword.Text = "This field is required to fill\r\n";
             this.lblPassword.Visible = false;
+            this.lblPassword.Click += new System.EventHandler(this.lblPassword_Click);
             // 
             // panel14
             // 
@@ -708,6 +710,7 @@
             this.lblConPass.TabIndex = 12;
             this.lblConPass.Text = "This field is required to fill\r\n";
             this.lblConPass.Visible = false;
+            this.lblConPass.Click += new System.EventHandler(this.lblConPass_Click);
             // 
             // panel12
             // 
