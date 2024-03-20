@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PdfiumViewer;
 
@@ -34,41 +29,89 @@ namespace ProjectPapyrus
 
         private void HandleDocumentViewerLoad(object sender, EventArgs e)
         {
-
-
             byte[] binaryData = GetBinaryDataForAttachment(selectedFileName);
             string contentType = GetContentTypeForAttachment(selectedFileName);
 
             if (binaryData != null && binaryData.Length > 0)
             {
-                if (contentType == "image/jpeg" || contentType == "image/png")
+                try
                 {
-                    ViewImage.Visible = true;
-                    using (MemoryStream ms = new MemoryStream(binaryData))
+                    if (contentType == "image/jpeg" || contentType == "image/png")
                     {
-                        Image image = Image.FromStream(ms);
-                        ViewImage.Image = image;
-                       // ViewImage.Image
+                        ViewImage.Visible = true;
+                        using (MemoryStream ms = new MemoryStream(binaryData))
+                        {
+                            Image image = Image.FromStream(ms);
+                            ViewImage.Image = image;
+                        }
+                    }
+                    else if (contentType == "application/pdf")
+                    {
+                        PdfViewer.Visible = true;
+                        PdfViewer.Load += PdfViewer_Load;
+                    }
+                    else if (IsWebPage(contentType))
+                    {
+                        // Open web pages with default browser
+                        OpenWebPageWithDefaultBrowser(binaryData);
+                    }
+                    else
+                    {
+                        // Check if it's an image in an unsupported format
+                        if (IsImage(contentType))
+                        {
+                            // Open image with default application
+                            OpenImageWithDefaultApp(binaryData, contentType);
+                        }
+                        else
+                        {
+                            // Open other file types in WebBrowser
+                            ViewWeb.DocumentStream = new MemoryStream(binaryData);
+                        }
                     }
                 }
-
-                else if (contentType == "application/pdf" )
+                catch (Exception ex)
                 {
-                    PdfViewer.Visible = true;
-
-                    PdfViewer.Load += PdfViewer_Load;
-                    //ViewWeb.DocumentStream = new MemoryStream(binaryData);
-                }
-                else
-
-                {
-                    ViewWeb.DocumentStream = new MemoryStream(binaryData);
+                    MessageBox.Show($"Error loading document: {ex.Message}");
                 }
             }
             else
             {
                 MessageBox.Show("Nothing to Show");
             }
+        }
+
+
+        private bool IsImage(string contentType)
+        {
+            return contentType.StartsWith("image/");
+        }
+
+        // Helper method to open an image with the default application
+        private void OpenImageWithDefaultApp(byte[] imageBytes, string contentType)
+        {
+            string tempFilePath = Path.GetTempFileName();
+            File.WriteAllBytes(tempFilePath, imageBytes);
+
+            Process.Start(tempFilePath);
+        }
+
+        private bool IsWebPage(string contentType)
+        {
+            return contentType.StartsWith("text/html") || contentType.StartsWith("application/xhtml+xml");
+        }
+
+        // Helper method to open a web page with the default browser
+        private void OpenWebPageWithDefaultBrowser(byte[] webPageBytes)
+        {
+            string tempFilePath = Path.GetTempFileName();
+            File.WriteAllBytes(tempFilePath, webPageBytes);
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = tempFilePath,
+                UseShellExecute = true
+            });
         }
 
         private string GetContentTypeForAttachment(string fileName)

@@ -61,6 +61,16 @@ namespace ProjectPapyrus.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] about {
+            get {
+                object obj = ResourceManager.GetObject("about", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap choice {
@@ -77,6 +87,16 @@ namespace ProjectPapyrus.Properties {
             get {
                 object obj = ResourceManager.GetObject("choice2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] HomePage {
+            get {
+                object obj = ResourceManager.GetObject("HomePage", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

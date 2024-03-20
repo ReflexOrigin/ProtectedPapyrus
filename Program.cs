@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Net.Http;
 using System.Net.NetworkInformation;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,22 +20,42 @@ namespace ProjectPapyrus
                 MessageBox.Show("Internet connection is required to use this application. Please check your internet connection and try again.");
                 return;
             }
+            System.Threading.Timer timer = new System.Threading.Timer(ExecuteScheduledNotesUpdate, null, TimeSpan.Zero, TimeSpan.FromHours(1));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Start the main loop asynchronously
             Task.Run(() => MainLoopAsync());
 
             Application.Run(new Login());
         }
 
-        private static bool IsInternetAvailable()
+        static void ExecuteScheduledNotesUpdate(object state)
+        {
+            string connectionString = "Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;User ID=reflexorigin;Password=waytoGO.1";
+            Guid recipientUserID = UserManager.UserID;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UpdateIsSentBasedOnScheduledDate", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@recipientUserID", recipientUserID);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+        static bool IsInternetAvailable()
         {
             return NetworkInterface.GetIsNetworkAvailable();
         }
 
-        private static async Task MainLoopAsync()
+        static async Task MainLoopAsync()
         {
             while (true)
             {
@@ -62,7 +82,7 @@ namespace ProjectPapyrus
             }
         }
 
-        private static async Task<bool> IsInternetAvailableAsync()
+        static async Task<bool> IsInternetAvailableAsync()
         {
             try
             {
@@ -78,7 +98,7 @@ namespace ProjectPapyrus
             }
         }
 
-        private static void DisplayInternetStatusMessage(bool isConnected)
+        static void DisplayInternetStatusMessage(bool isConnected)
         {
             string statusMessage = isConnected
                 ? "Internet connection is available."

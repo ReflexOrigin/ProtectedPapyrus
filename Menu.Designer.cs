@@ -31,9 +31,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TopBar = new System.Windows.Forms.Panel();
             this.pnlChoice = new System.Windows.Forms.Panel();
             this.btnChoices = new System.Windows.Forms.Button();
@@ -74,6 +74,11 @@
             this.viewBarTransition = new System.Windows.Forms.Timer(this.components);
             this.panelView = new System.Windows.Forms.Panel();
             this.pnlGridView = new System.Windows.Forms.Panel();
+            this.HaveKeyDataGrid = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GridView = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NoteTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,14 +95,14 @@
             this.ViewTitle = new System.Windows.Forms.TextBox();
             this.AtcName = new System.Windows.Forms.ListBox();
             this.ViewRichBox = new System.Windows.Forms.RichTextBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.addAtch = new System.Windows.Forms.Button();
-            this.ViewEncryptKey = new System.Windows.Forms.TextBox();
-            this.ViewCopy = new System.Windows.Forms.Button();
+            this.ViewActionPanel = new System.Windows.Forms.Panel();
+            this.ViewExit = new System.Windows.Forms.Button();
+            this.ViewEdit = new System.Windows.Forms.Button();
+            this.ViewATC = new System.Windows.Forms.Button();
             this.ViewCancel = new System.Windows.Forms.Button();
             this.viewSave = new System.Windows.Forms.Button();
             this.notesWAttachBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.pnlCalendar = new System.Windows.Forms.Panel();
+            this.panelCalendar = new System.Windows.Forms.Panel();
             this.recPnl = new System.Windows.Forms.Panel();
             this.futureLabel = new System.Windows.Forms.Label();
             this.sendDatePick = new System.Windows.Forms.DateTimePicker();
@@ -133,13 +138,14 @@
             this.pnlNoteAction.SuspendLayout();
             this.panelView.SuspendLayout();
             this.pnlGridView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HaveKeyDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).BeginInit();
             this.pnlViewAction.SuspendLayout();
             this.pnlOkView.SuspendLayout();
             this.pnlRichbox.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.ViewActionPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.notesWAttachBindingSource1)).BeginInit();
-            this.pnlCalendar.SuspendLayout();
+            this.panelCalendar.SuspendLayout();
             this.recPnl.SuspendLayout();
             this.PanelcalenderVerifySuccess.SuspendLayout();
             this.pnlFutureSCAC.SuspendLayout();
@@ -293,7 +299,7 @@
             this.pnlHomeLogo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlHomeLogo.Controls.Add(this.Logo);
             this.pnlHomeLogo.Controls.Add(this.label4);
-            this.pnlHomeLogo.Location = new System.Drawing.Point(201, 218);
+            this.pnlHomeLogo.Location = new System.Drawing.Point(301, 198);
             this.pnlHomeLogo.Name = "pnlHomeLogo";
             this.pnlHomeLogo.Size = new System.Drawing.Size(602, 159);
             this.pnlHomeLogo.TabIndex = 7;
@@ -380,13 +386,13 @@
             this.btnByKey.Name = "btnByKey";
             this.btnByKey.Size = new System.Drawing.Size(253, 52);
             this.btnByKey.TabIndex = 1;
-            this.btnByKey.Text = "Have key?";
+            this.btnByKey.Text = "Recieved";
             this.btnByKey.UseVisualStyleBackColor = false;
             this.btnByKey.Click += new System.EventHandler(this.btnByKey_Click);
             // 
             // sidebar1
             // 
-            this.sidebar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.sidebar1.BackColor = System.Drawing.Color.Black;
             this.sidebar1.Controls.Add(this.pnlHome);
             this.sidebar1.Controls.Add(this.newBar);
             this.sidebar1.Controls.Add(this.viewBar);
@@ -395,7 +401,7 @@
             this.sidebar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sidebar1.Location = new System.Drawing.Point(0, 0);
             this.sidebar1.Name = "sidebar1";
-            this.sidebar1.Size = new System.Drawing.Size(250, 608);
+            this.sidebar1.Size = new System.Drawing.Size(50, 608);
             this.sidebar1.TabIndex = 8;
             // 
             // pnlCalendarManual
@@ -468,7 +474,7 @@
             this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.sidebar.Location = new System.Drawing.Point(1, 41);
             this.sidebar.Name = "sidebar";
-            this.sidebar.Size = new System.Drawing.Size(250, 608);
+            this.sidebar.Size = new System.Drawing.Size(50, 608);
             this.sidebar.TabIndex = 9;
             // 
             // pnlLogoPage
@@ -476,9 +482,9 @@
             this.pnlLogoPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(13)))), ((int)(((byte)(65)))));
             this.pnlLogoPage.Controls.Add(this.pnlHomeLogo);
             this.pnlLogoPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLogoPage.Location = new System.Drawing.Point(251, 41);
+            this.pnlLogoPage.Location = new System.Drawing.Point(51, 41);
             this.pnlLogoPage.Name = "pnlLogoPage";
-            this.pnlLogoPage.Size = new System.Drawing.Size(1008, 608);
+            this.pnlLogoPage.Size = new System.Drawing.Size(1208, 608);
             this.pnlLogoPage.TabIndex = 10;
             // 
             // panelNew
@@ -486,9 +492,10 @@
             this.panelNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.panelNew.Controls.Add(this.NewTitle);
             this.panelNew.Controls.Add(this.pnlNoteAction);
-            this.panelNew.Location = new System.Drawing.Point(251, 41);
+            this.panelNew.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelNew.Location = new System.Drawing.Point(51, 41);
             this.panelNew.Name = "panelNew";
-            this.panelNew.Size = new System.Drawing.Size(1008, 608);
+            this.panelNew.Size = new System.Drawing.Size(1208, 608);
             this.panelNew.TabIndex = 8;
             this.panelNew.Visible = false;
             // 
@@ -497,10 +504,11 @@
             this.NewTitle.Controls.Add(this.new_attach);
             this.NewTitle.Controls.Add(this.NoteTT);
             this.NewTitle.Controls.Add(this.NoteText);
+            this.NewTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NewTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NewTitle.Location = new System.Drawing.Point(0, 0);
             this.NewTitle.Name = "NewTitle";
-            this.NewTitle.Size = new System.Drawing.Size(1008, 508);
+            this.NewTitle.Size = new System.Drawing.Size(1208, 508);
             this.NewTitle.TabIndex = 2;
             // 
             // new_attach
@@ -510,7 +518,7 @@
             this.new_attach.ItemHeight = 24;
             this.new_attach.Location = new System.Drawing.Point(0, 456);
             this.new_attach.Name = "new_attach";
-            this.new_attach.Size = new System.Drawing.Size(1008, 52);
+            this.new_attach.Size = new System.Drawing.Size(1208, 52);
             this.new_attach.TabIndex = 2;
             // 
             // NoteTT
@@ -518,7 +526,7 @@
             this.NoteTT.Dock = System.Windows.Forms.DockStyle.Top;
             this.NoteTT.Location = new System.Drawing.Point(0, 0);
             this.NoteTT.Name = "NoteTT";
-            this.NoteTT.Size = new System.Drawing.Size(1008, 29);
+            this.NoteTT.Size = new System.Drawing.Size(1208, 29);
             this.NoteTT.TabIndex = 1;
             // 
             // NoteText
@@ -530,7 +538,7 @@
             this.NoteText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.NoteText.Location = new System.Drawing.Point(0, 29);
             this.NoteText.Name = "NoteText";
-            this.NoteText.Size = new System.Drawing.Size(1299, 731);
+            this.NoteText.Size = new System.Drawing.Size(1208, 430);
             this.NoteText.TabIndex = 0;
             this.NoteText.Text = "";
             // 
@@ -544,7 +552,7 @@
             this.pnlNoteAction.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlNoteAction.Location = new System.Drawing.Point(0, 508);
             this.pnlNoteAction.Name = "pnlNoteAction";
-            this.pnlNoteAction.Size = new System.Drawing.Size(1008, 100);
+            this.pnlNoteAction.Size = new System.Drawing.Size(1208, 100);
             this.pnlNoteAction.TabIndex = 1;
             // 
             // NewAttach
@@ -557,7 +565,7 @@
             this.NewAttach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewAttach.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NewAttach.ForeColor = System.Drawing.Color.Lime;
-            this.NewAttach.Location = new System.Drawing.Point(470, 3);
+            this.NewAttach.Location = new System.Drawing.Point(570, 3);
             this.NewAttach.Name = "NewAttach";
             this.NewAttach.Size = new System.Drawing.Size(31, 31);
             this.NewAttach.TabIndex = 29;
@@ -573,7 +581,7 @@
             this.outKey.Enabled = false;
             this.outKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outKey.ForeColor = System.Drawing.Color.White;
-            this.outKey.Location = new System.Drawing.Point(470, 39);
+            this.outKey.Location = new System.Drawing.Point(570, 39);
             this.outKey.Name = "outKey";
             this.outKey.Size = new System.Drawing.Size(367, 22);
             this.outKey.TabIndex = 27;
@@ -589,7 +597,7 @@
             this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCopy.ForeColor = System.Drawing.Color.Lime;
-            this.btnCopy.Location = new System.Drawing.Point(470, 66);
+            this.btnCopy.Location = new System.Drawing.Point(570, 66);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(368, 31);
             this.btnCopy.TabIndex = 26;
@@ -608,12 +616,13 @@
             this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancel.ForeColor = System.Drawing.Color.Red;
-            this.cancel.Location = new System.Drawing.Point(675, 3);
+            this.cancel.Location = new System.Drawing.Point(775, 3);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(163, 31);
             this.cancel.TabIndex = 23;
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click_1);
             // 
             // save
             // 
@@ -625,7 +634,7 @@
             this.save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.save.ForeColor = System.Drawing.Color.Lime;
-            this.save.Location = new System.Drawing.Point(507, 3);
+            this.save.Location = new System.Drawing.Point(607, 3);
             this.save.Name = "save";
             this.save.Size = new System.Drawing.Size(163, 31);
             this.save.TabIndex = 22;
@@ -644,61 +653,108 @@
             this.panelView.Controls.Add(this.pnlGridView);
             this.panelView.Controls.Add(this.pnlViewAction);
             this.panelView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelView.Location = new System.Drawing.Point(251, 41);
+            this.panelView.Location = new System.Drawing.Point(51, 41);
             this.panelView.Name = "panelView";
-            this.panelView.Size = new System.Drawing.Size(1008, 608);
+            this.panelView.Size = new System.Drawing.Size(1208, 608);
             this.panelView.TabIndex = 11;
             this.panelView.Visible = false;
             // 
             // pnlGridView
             // 
+            this.pnlGridView.Controls.Add(this.HaveKeyDataGrid);
             this.pnlGridView.Controls.Add(this.GridView);
             this.pnlGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlGridView.Location = new System.Drawing.Point(0, 0);
             this.pnlGridView.Name = "pnlGridView";
-            this.pnlGridView.Size = new System.Drawing.Size(1008, 477);
+            this.pnlGridView.Size = new System.Drawing.Size(1208, 477);
             this.pnlGridView.TabIndex = 0;
+            // 
+            // HaveKeyDataGrid
+            // 
+            this.HaveKeyDataGrid.AllowUserToAddRows = false;
+            this.HaveKeyDataGrid.AllowUserToDeleteRows = false;
+            this.HaveKeyDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.HaveKeyDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+            this.HaveKeyDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HaveKeyDataGrid.Location = new System.Drawing.Point(0, 0);
+            this.HaveKeyDataGrid.Name = "HaveKeyDataGrid";
+            this.HaveKeyDataGrid.ReadOnly = true;
+            this.HaveKeyDataGrid.Size = new System.Drawing.Size(1208, 477);
+            this.HaveKeyDataGrid.TabIndex = 4;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.HeaderText = "NoteID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "NoteTitle";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn3.HeaderText = "CreatedDate";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn4.HeaderText = "FileName";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // GridView
             // 
             this.GridView.AllowUserToAddRows = false;
             this.GridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.NoteTitle,
             this.CreatedDate,
             this.FileName});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.GridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.GridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.GridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridView.Location = new System.Drawing.Point(0, 0);
             this.GridView.Name = "GridView";
             this.GridView.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.GridView.Size = new System.Drawing.Size(1008, 477);
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.GridView.Size = new System.Drawing.Size(1208, 477);
             this.GridView.TabIndex = 3;
+            this.GridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             // 
             // ID
             // 
@@ -738,7 +794,7 @@
             this.pnlViewAction.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlViewAction.Location = new System.Drawing.Point(0, 477);
             this.pnlViewAction.Name = "pnlViewAction";
-            this.pnlViewAction.Size = new System.Drawing.Size(1008, 131);
+            this.pnlViewAction.Size = new System.Drawing.Size(1208, 131);
             this.pnlViewAction.TabIndex = 23;
             this.pnlViewAction.Visible = false;
             // 
@@ -752,7 +808,7 @@
             this.Con_Pro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Con_Pro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Con_Pro.ForeColor = System.Drawing.Color.Lime;
-            this.Con_Pro.Location = new System.Drawing.Point(404, 46);
+            this.Con_Pro.Location = new System.Drawing.Point(504, 46);
             this.Con_Pro.Name = "Con_Pro";
             this.Con_Pro.Size = new System.Drawing.Size(214, 42);
             this.Con_Pro.TabIndex = 26;
@@ -771,7 +827,7 @@
             this.Continue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Continue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Continue.ForeColor = System.Drawing.Color.Lime;
-            this.Continue.Location = new System.Drawing.Point(403, 46);
+            this.Continue.Location = new System.Drawing.Point(503, 46);
             this.Continue.Name = "Continue";
             this.Continue.Size = new System.Drawing.Size(214, 42);
             this.Continue.TabIndex = 24;
@@ -785,7 +841,7 @@
             this.keyStatus.AutoSize = true;
             this.keyStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.keyStatus.ForeColor = System.Drawing.Color.Red;
-            this.keyStatus.Location = new System.Drawing.Point(425, 92);
+            this.keyStatus.Location = new System.Drawing.Point(525, 92);
             this.keyStatus.Name = "keyStatus";
             this.keyStatus.Size = new System.Drawing.Size(171, 16);
             this.keyStatus.TabIndex = 25;
@@ -796,7 +852,7 @@
             // 
             this.pnllineUnderInputKey.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnllineUnderInputKey.BackColor = System.Drawing.Color.White;
-            this.pnllineUnderInputKey.Location = new System.Drawing.Point(331, 39);
+            this.pnllineUnderInputKey.Location = new System.Drawing.Point(431, 39);
             this.pnllineUnderInputKey.Name = "pnllineUnderInputKey";
             this.pnllineUnderInputKey.Size = new System.Drawing.Size(359, 1);
             this.pnllineUnderInputKey.TabIndex = 7;
@@ -808,7 +864,7 @@
             this.inputKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inputKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inputKey.ForeColor = System.Drawing.Color.Gray;
-            this.inputKey.Location = new System.Drawing.Point(331, 18);
+            this.inputKey.Location = new System.Drawing.Point(431, 18);
             this.inputKey.Name = "inputKey";
             this.inputKey.Size = new System.Drawing.Size(359, 19);
             this.inputKey.TabIndex = 6;
@@ -820,11 +876,11 @@
             // 
             this.pnlOkView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.pnlOkView.Controls.Add(this.pnlRichbox);
-            this.pnlOkView.Controls.Add(this.panel3);
+            this.pnlOkView.Controls.Add(this.ViewActionPanel);
             this.pnlOkView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlOkView.Location = new System.Drawing.Point(251, 41);
+            this.pnlOkView.Location = new System.Drawing.Point(51, 41);
             this.pnlOkView.Name = "pnlOkView";
-            this.pnlOkView.Size = new System.Drawing.Size(1008, 608);
+            this.pnlOkView.Size = new System.Drawing.Size(1208, 608);
             this.pnlOkView.TabIndex = 12;
             this.pnlOkView.Visible = false;
             // 
@@ -837,7 +893,7 @@
             this.pnlRichbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlRichbox.Location = new System.Drawing.Point(0, 0);
             this.pnlRichbox.Name = "pnlRichbox";
-            this.pnlRichbox.Size = new System.Drawing.Size(1008, 465);
+            this.pnlRichbox.Size = new System.Drawing.Size(1208, 508);
             this.pnlRichbox.TabIndex = 6;
             // 
             // ViewTitle
@@ -845,7 +901,7 @@
             this.ViewTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.ViewTitle.Location = new System.Drawing.Point(0, 0);
             this.ViewTitle.Name = "ViewTitle";
-            this.ViewTitle.Size = new System.Drawing.Size(1008, 29);
+            this.ViewTitle.Size = new System.Drawing.Size(1208, 29);
             this.ViewTitle.TabIndex = 32;
             // 
             // AtcName
@@ -856,9 +912,9 @@
             this.AtcName.ForeColor = System.Drawing.Color.Red;
             this.AtcName.FormattingEnabled = true;
             this.AtcName.ItemHeight = 16;
-            this.AtcName.Location = new System.Drawing.Point(0, 429);
+            this.AtcName.Location = new System.Drawing.Point(0, 472);
             this.AtcName.Name = "AtcName";
-            this.AtcName.Size = new System.Drawing.Size(1008, 36);
+            this.AtcName.Size = new System.Drawing.Size(1208, 36);
             this.AtcName.Sorted = true;
             this.AtcName.TabIndex = 31;
             this.AtcName.TabStop = false;
@@ -871,74 +927,79 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewRichBox.BackColor = System.Drawing.Color.Silver;
             this.ViewRichBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ViewRichBox.Location = new System.Drawing.Point(1, 29);
+            this.ViewRichBox.Location = new System.Drawing.Point(0, 29);
             this.ViewRichBox.Name = "ViewRichBox";
-            this.ViewRichBox.Size = new System.Drawing.Size(1007, 403);
+            this.ViewRichBox.Size = new System.Drawing.Size(1208, 445);
             this.ViewRichBox.TabIndex = 4;
             this.ViewRichBox.Text = "";
             // 
-            // panel3
+            // ViewActionPanel
             // 
-            this.panel3.Controls.Add(this.addAtch);
-            this.panel3.Controls.Add(this.ViewEncryptKey);
-            this.panel3.Controls.Add(this.ViewCopy);
-            this.panel3.Controls.Add(this.ViewCancel);
-            this.panel3.Controls.Add(this.viewSave);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 465);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1008, 143);
-            this.panel3.TabIndex = 5;
+            this.ViewActionPanel.Controls.Add(this.ViewExit);
+            this.ViewActionPanel.Controls.Add(this.ViewEdit);
+            this.ViewActionPanel.Controls.Add(this.ViewATC);
+            this.ViewActionPanel.Controls.Add(this.ViewCancel);
+            this.ViewActionPanel.Controls.Add(this.viewSave);
+            this.ViewActionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ViewActionPanel.Location = new System.Drawing.Point(0, 508);
+            this.ViewActionPanel.Name = "ViewActionPanel";
+            this.ViewActionPanel.Size = new System.Drawing.Size(1208, 100);
+            this.ViewActionPanel.TabIndex = 5;
             // 
-            // addAtch
+            // ViewExit
             // 
-            this.addAtch.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.addAtch.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.addAtch.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.addAtch.FlatAppearance.BorderSize = 2;
-            this.addAtch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.addAtch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addAtch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addAtch.ForeColor = System.Drawing.Color.Lime;
-            this.addAtch.Location = new System.Drawing.Point(683, -442);
-            this.addAtch.Name = "addAtch";
-            this.addAtch.Size = new System.Drawing.Size(31, 31);
-            this.addAtch.TabIndex = 29;
-            this.addAtch.Text = "+";
-            this.addAtch.UseVisualStyleBackColor = true;
+            this.ViewExit.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ViewExit.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ViewExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ViewExit.FlatAppearance.BorderSize = 2;
+            this.ViewExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ViewExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ViewExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ViewExit.ForeColor = System.Drawing.Color.Red;
+            this.ViewExit.Location = new System.Drawing.Point(906, 15);
+            this.ViewExit.Name = "ViewExit";
+            this.ViewExit.Size = new System.Drawing.Size(163, 31);
+            this.ViewExit.TabIndex = 39;
+            this.ViewExit.Text = "Exit";
+            this.ViewExit.UseVisualStyleBackColor = true;
+            this.ViewExit.Click += new System.EventHandler(this.ViewExit_Click);
             // 
-            // ViewEncryptKey
+            // ViewEdit
             // 
-            this.ViewEncryptKey.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ViewEncryptKey.BackColor = System.Drawing.Color.Black;
-            this.ViewEncryptKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ViewEncryptKey.Enabled = false;
-            this.ViewEncryptKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ViewEncryptKey.ForeColor = System.Drawing.Color.White;
-            this.ViewEncryptKey.Location = new System.Drawing.Point(683, -406);
-            this.ViewEncryptKey.Name = "ViewEncryptKey";
-            this.ViewEncryptKey.Size = new System.Drawing.Size(367, 22);
-            this.ViewEncryptKey.TabIndex = 27;
-            this.ViewEncryptKey.Visible = false;
+            this.ViewEdit.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ViewEdit.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ViewEdit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ViewEdit.FlatAppearance.BorderSize = 2;
+            this.ViewEdit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ViewEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ViewEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ViewEdit.ForeColor = System.Drawing.Color.Lime;
+            this.ViewEdit.Location = new System.Drawing.Point(132, 15);
+            this.ViewEdit.Name = "ViewEdit";
+            this.ViewEdit.Size = new System.Drawing.Size(163, 31);
+            this.ViewEdit.TabIndex = 38;
+            this.ViewEdit.Text = "Edit";
+            this.ViewEdit.UseVisualStyleBackColor = true;
+            this.ViewEdit.Click += new System.EventHandler(this.ViewEdit_Click);
             // 
-            // ViewCopy
+            // ViewATC
             // 
-            this.ViewCopy.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ViewCopy.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ViewCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.ViewCopy.FlatAppearance.BorderSize = 2;
-            this.ViewCopy.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.ViewCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ViewCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ViewCopy.ForeColor = System.Drawing.Color.Lime;
-            this.ViewCopy.Location = new System.Drawing.Point(683, -377);
-            this.ViewCopy.Name = "ViewCopy";
-            this.ViewCopy.Size = new System.Drawing.Size(368, 31);
-            this.ViewCopy.TabIndex = 26;
-            this.ViewCopy.Text = "Copy";
-            this.ViewCopy.UseVisualStyleBackColor = true;
-            this.ViewCopy.Visible = false;
-            this.ViewCopy.Click += new System.EventHandler(this.ViewCopy_Click);
+            this.ViewATC.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ViewATC.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ViewATC.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ViewATC.FlatAppearance.BorderSize = 2;
+            this.ViewATC.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ViewATC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ViewATC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ViewATC.ForeColor = System.Drawing.Color.Lime;
+            this.ViewATC.Location = new System.Drawing.Point(351, 15);
+            this.ViewATC.Name = "ViewATC";
+            this.ViewATC.Size = new System.Drawing.Size(163, 31);
+            this.ViewATC.TabIndex = 29;
+            this.ViewATC.Text = "+";
+            this.ViewATC.UseVisualStyleBackColor = true;
+            this.ViewATC.Visible = false;
+            this.ViewATC.Click += new System.EventHandler(this.ViewATC_Click);
             // 
             // ViewCancel
             // 
@@ -950,12 +1011,14 @@
             this.ViewCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ViewCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ViewCancel.ForeColor = System.Drawing.Color.Red;
-            this.ViewCancel.Location = new System.Drawing.Point(888, -442);
+            this.ViewCancel.Location = new System.Drawing.Point(689, 15);
             this.ViewCancel.Name = "ViewCancel";
             this.ViewCancel.Size = new System.Drawing.Size(163, 31);
             this.ViewCancel.TabIndex = 23;
             this.ViewCancel.Text = "Cancel";
             this.ViewCancel.UseVisualStyleBackColor = true;
+            this.ViewCancel.Visible = false;
+            this.ViewCancel.Click += new System.EventHandler(this.ViewCancel_Click_1);
             // 
             // viewSave
             // 
@@ -967,27 +1030,29 @@
             this.viewSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.viewSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.viewSave.ForeColor = System.Drawing.Color.Lime;
-            this.viewSave.Location = new System.Drawing.Point(720, -442);
+            this.viewSave.Location = new System.Drawing.Point(520, 15);
             this.viewSave.Name = "viewSave";
             this.viewSave.Size = new System.Drawing.Size(163, 31);
             this.viewSave.TabIndex = 22;
             this.viewSave.Text = "Save";
             this.viewSave.UseVisualStyleBackColor = true;
+            this.viewSave.Visible = false;
             this.viewSave.Click += new System.EventHandler(this.viewSave_Click);
             // 
             // notesWAttachBindingSource1
             // 
             this.notesWAttachBindingSource1.DataMember = "NotesWAttach";
             // 
-            // pnlCalendar
+            // panelCalendar
             // 
-            this.pnlCalendar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
-            this.pnlCalendar.Controls.Add(this.recPnl);
-            this.pnlCalendar.Location = new System.Drawing.Point(251, 41);
-            this.pnlCalendar.Name = "pnlCalendar";
-            this.pnlCalendar.Size = new System.Drawing.Size(1008, 608);
-            this.pnlCalendar.TabIndex = 13;
-            this.pnlCalendar.Visible = false;
+            this.panelCalendar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.panelCalendar.Controls.Add(this.recPnl);
+            this.panelCalendar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCalendar.Location = new System.Drawing.Point(51, 41);
+            this.panelCalendar.Name = "panelCalendar";
+            this.panelCalendar.Size = new System.Drawing.Size(1208, 608);
+            this.panelCalendar.TabIndex = 13;
+            this.panelCalendar.Visible = false;
             // 
             // recPnl
             // 
@@ -1000,7 +1065,7 @@
             this.recPnl.Controls.Add(this.lblUrecipient);
             this.recPnl.Controls.Add(this.panel10);
             this.recPnl.Controls.Add(this.RecipientBox);
-            this.recPnl.Location = new System.Drawing.Point(384, 249);
+            this.recPnl.Location = new System.Drawing.Point(484, 249);
             this.recPnl.Name = "recPnl";
             this.recPnl.Size = new System.Drawing.Size(245, 125);
             this.recPnl.TabIndex = 9;
@@ -1098,10 +1163,11 @@
             this.PanelcalenderVerifySuccess.Controls.Add(this.Calendar_viewTitle);
             this.PanelcalenderVerifySuccess.Controls.Add(this.FutureTextBox);
             this.PanelcalenderVerifySuccess.Controls.Add(this.pnlFutureSCAC);
+            this.PanelcalenderVerifySuccess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelcalenderVerifySuccess.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PanelcalenderVerifySuccess.Location = new System.Drawing.Point(251, 41);
+            this.PanelcalenderVerifySuccess.Location = new System.Drawing.Point(51, 41);
             this.PanelcalenderVerifySuccess.Name = "PanelcalenderVerifySuccess";
-            this.PanelcalenderVerifySuccess.Size = new System.Drawing.Size(1008, 608);
+            this.PanelcalenderVerifySuccess.Size = new System.Drawing.Size(1208, 608);
             this.PanelcalenderVerifySuccess.TabIndex = 0;
             this.PanelcalenderVerifySuccess.Visible = false;
             // 
@@ -1112,7 +1178,7 @@
             this.Calendar_viewAttach.ItemHeight = 24;
             this.Calendar_viewAttach.Location = new System.Drawing.Point(0, 419);
             this.Calendar_viewAttach.Name = "Calendar_viewAttach";
-            this.Calendar_viewAttach.Size = new System.Drawing.Size(1008, 52);
+            this.Calendar_viewAttach.Size = new System.Drawing.Size(1208, 52);
             this.Calendar_viewAttach.TabIndex = 5;
             // 
             // Calendar_viewTitle
@@ -1120,7 +1186,7 @@
             this.Calendar_viewTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.Calendar_viewTitle.Location = new System.Drawing.Point(0, 0);
             this.Calendar_viewTitle.Name = "Calendar_viewTitle";
-            this.Calendar_viewTitle.Size = new System.Drawing.Size(1008, 29);
+            this.Calendar_viewTitle.Size = new System.Drawing.Size(1208, 29);
             this.Calendar_viewTitle.TabIndex = 4;
             // 
             // FutureTextBox
@@ -1133,7 +1199,7 @@
             this.FutureTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureTextBox.Location = new System.Drawing.Point(0, 29);
             this.FutureTextBox.Name = "FutureTextBox";
-            this.FutureTextBox.Size = new System.Drawing.Size(1008, 394);
+            this.FutureTextBox.Size = new System.Drawing.Size(1208, 394);
             this.FutureTextBox.TabIndex = 2;
             this.FutureTextBox.Text = "";
             this.FutureTextBox.TextChanged += new System.EventHandler(this.FutureTextBox_TextChanged);
@@ -1148,7 +1214,7 @@
             this.pnlFutureSCAC.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlFutureSCAC.Location = new System.Drawing.Point(0, 471);
             this.pnlFutureSCAC.Name = "pnlFutureSCAC";
-            this.pnlFutureSCAC.Size = new System.Drawing.Size(1008, 137);
+            this.pnlFutureSCAC.Size = new System.Drawing.Size(1208, 137);
             this.pnlFutureSCAC.TabIndex = 3;
             // 
             // FutureAttach
@@ -1161,12 +1227,13 @@
             this.FutureAttach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FutureAttach.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureAttach.ForeColor = System.Drawing.Color.Lime;
-            this.FutureAttach.Location = new System.Drawing.Point(380, 21);
+            this.FutureAttach.Location = new System.Drawing.Point(480, 21);
             this.FutureAttach.Name = "FutureAttach";
             this.FutureAttach.Size = new System.Drawing.Size(31, 31);
             this.FutureAttach.TabIndex = 34;
             this.FutureAttach.Text = "+";
             this.FutureAttach.UseVisualStyleBackColor = true;
+            this.FutureAttach.Click += new System.EventHandler(this.FutureAttach_Click);
             // 
             // FutureEncKey
             // 
@@ -1176,7 +1243,7 @@
             this.FutureEncKey.Enabled = false;
             this.FutureEncKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureEncKey.ForeColor = System.Drawing.Color.White;
-            this.FutureEncKey.Location = new System.Drawing.Point(380, 57);
+            this.FutureEncKey.Location = new System.Drawing.Point(480, 57);
             this.FutureEncKey.Name = "FutureEncKey";
             this.FutureEncKey.Size = new System.Drawing.Size(367, 22);
             this.FutureEncKey.TabIndex = 33;
@@ -1192,13 +1259,14 @@
             this.FutureCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FutureCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureCopy.ForeColor = System.Drawing.Color.Lime;
-            this.FutureCopy.Location = new System.Drawing.Point(380, 84);
+            this.FutureCopy.Location = new System.Drawing.Point(480, 84);
             this.FutureCopy.Name = "FutureCopy";
             this.FutureCopy.Size = new System.Drawing.Size(368, 31);
             this.FutureCopy.TabIndex = 32;
             this.FutureCopy.Text = "Copy";
             this.FutureCopy.UseVisualStyleBackColor = true;
             this.FutureCopy.Visible = false;
+            this.FutureCopy.Click += new System.EventHandler(this.FutureCopy_Click);
             // 
             // FutureCancel
             // 
@@ -1210,12 +1278,13 @@
             this.FutureCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FutureCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureCancel.ForeColor = System.Drawing.Color.Red;
-            this.FutureCancel.Location = new System.Drawing.Point(585, 21);
+            this.FutureCancel.Location = new System.Drawing.Point(685, 21);
             this.FutureCancel.Name = "FutureCancel";
             this.FutureCancel.Size = new System.Drawing.Size(163, 31);
             this.FutureCancel.TabIndex = 31;
             this.FutureCancel.Text = "Cancel";
             this.FutureCancel.UseVisualStyleBackColor = true;
+            this.FutureCancel.Click += new System.EventHandler(this.FutureCancel_Click);
             // 
             // FutureSave
             // 
@@ -1227,7 +1296,7 @@
             this.FutureSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FutureSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FutureSave.ForeColor = System.Drawing.Color.Lime;
-            this.FutureSave.Location = new System.Drawing.Point(417, 21);
+            this.FutureSave.Location = new System.Drawing.Point(517, 21);
             this.FutureSave.Name = "FutureSave";
             this.FutureSave.Size = new System.Drawing.Size(163, 31);
             this.FutureSave.TabIndex = 30;
@@ -1239,12 +1308,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(60)))), ((int)(((byte)(226)))));
+            this.BackColor = System.Drawing.Color.Gold;
             this.ClientSize = new System.Drawing.Size(1260, 650);
-            this.Controls.Add(this.PanelcalenderVerifySuccess);
-            this.Controls.Add(this.pnlCalendar);
-            this.Controls.Add(this.panelNew);
             this.Controls.Add(this.pnlOkView);
+            this.Controls.Add(this.PanelcalenderVerifySuccess);
+            this.Controls.Add(this.panelCalendar);
+            this.Controls.Add(this.panelNew);
             this.Controls.Add(this.panelView);
             this.Controls.Add(this.pnlLogoPage);
             this.Controls.Add(this.sidebar);
@@ -1274,16 +1343,16 @@
             this.pnlNoteAction.PerformLayout();
             this.panelView.ResumeLayout(false);
             this.pnlGridView.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HaveKeyDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
             this.pnlViewAction.ResumeLayout(false);
             this.pnlViewAction.PerformLayout();
             this.pnlOkView.ResumeLayout(false);
             this.pnlRichbox.ResumeLayout(false);
             this.pnlRichbox.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.ViewActionPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.notesWAttachBindingSource1)).EndInit();
-            this.pnlCalendar.ResumeLayout(false);
+            this.panelCalendar.ResumeLayout(false);
             this.recPnl.ResumeLayout(false);
             this.recPnl.PerformLayout();
             this.PanelcalenderVerifySuccess.ResumeLayout(false);
@@ -1342,16 +1411,13 @@
         private System.Windows.Forms.Panel NewTitle;
         private System.Windows.Forms.Panel pnlGridView;
         private System.Windows.Forms.Panel pnlRichbox;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button addAtch;
-        private System.Windows.Forms.TextBox ViewEncryptKey;
-        private System.Windows.Forms.Button ViewCopy;
+        private System.Windows.Forms.Panel ViewActionPanel;
+        private System.Windows.Forms.Button ViewATC;
         private System.Windows.Forms.Button ViewCancel;
-        private System.Windows.Forms.Button viewSave;
         private System.Windows.Forms.PictureBox Logo;
         private System.Windows.Forms.BindingSource notesWAttachBindingSource1;
         private System.Windows.Forms.ListBox AtcName;
-        private System.Windows.Forms.Panel pnlCalendar;
+        private System.Windows.Forms.Panel panelCalendar;
         private System.Windows.Forms.Panel recPnl;
         private System.Windows.Forms.Label availabilityLabel;
         private System.Windows.Forms.Label lblUrecipient;
@@ -1378,5 +1444,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NoteTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn CreatedDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
+        private System.Windows.Forms.DataGridView HaveKeyDataGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.Button ViewExit;
+        private System.Windows.Forms.Button ViewEdit;
+        private System.Windows.Forms.Button viewSave;
     }
 }

@@ -9,14 +9,9 @@ using System.Windows.Forms;
 using System.IO;
 using MimeMapping;
 using System.Threading.Tasks;
-using Hangfire;
-using Hangfire.Server;
-using static Hangfire.Storage.JobStorageFeatures;
 using System.Security.Cryptography;
-using System.Text;
-using System.Reflection;
 using System.Diagnostics;
-using Hangfire.States;
+
 
 namespace ProjectPapyrus
 {
@@ -24,7 +19,7 @@ namespace ProjectPapyrus
     {
         private SqlConnection connection;
 
-       // private readonly NoteService noteService = new NoteService();
+        // private readonly NoteService noteService = new NoteService();
 
         public Menu()
         {
@@ -33,9 +28,122 @@ namespace ProjectPapyrus
             string connectionString = "Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;MultipleActiveResultSets=True;User ID=reflexorigin;Password=waytoGO.1;";
             connection = new SqlConnection(connectionString);
             connection.Open();
-
-
+            BeautifyDataGridView(GridView);
+            BeautifyHaveDataGridView(HaveKeyDataGrid);
         }
+
+        private void BeautifyHaveDataGridView(DataGridView dataGridView)
+        {
+            Color indigo = Color.FromArgb(75, 0, 130);
+            Color darkViolet = Color.DarkViolet;
+
+            // Set the alternating row styles
+            DataGridViewCellStyle altRowStyle = dataGridView.AlternatingRowsDefaultCellStyle;
+            altRowStyle.BackColor = darkViolet; // DarkViolet for odd rows
+            altRowStyle.ForeColor = Color.White;
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    // Even rows: Indigo
+                    dataGridView.Rows[i].DefaultCellStyle.BackColor = indigo;
+                    dataGridView.Rows[i].DefaultCellStyle.ForeColor = Color.White;
+                }
+            }
+
+            // Set the header styles
+            DataGridViewCellStyle headerStyle = dataGridView.ColumnHeadersDefaultCellStyle;
+            headerStyle.BackColor = indigo; // Use indigo for the header background
+            headerStyle.ForeColor = Color.White;
+            headerStyle.Font = new Font("Nova Square", 12F, FontStyle.Bold); // Standard system font, larger size
+            headerStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            headerStyle.Padding = new Padding(10, 5, 10, 5);
+
+            // Set the selection background color
+            DataGridViewCellStyle selectionStyle = dataGridView.DefaultCellStyle;
+            selectionStyle.SelectionBackColor = Color.FromArgb(184, 134, 11); // Dark Goldenrod
+            selectionStyle.SelectionForeColor = Color.White;
+
+            // Disable user-resizing of columns
+            dataGridView.AllowUserToResizeColumns = false;
+
+            // Add a subtle border for better separation
+            dataGridView.BorderStyle = BorderStyle.FixedSingle;
+
+            // Enhance grid lines
+            dataGridView.GridColor = Color.Silver;
+            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            // Add rounded corners to the header
+            dataGridView.EnableHeadersVisualStyles = false;
+
+            // Add a drop shadow effect
+            dataGridView.Margin = new Padding(0, 0, 0, 5); // Margin for the entire DataGridView
+            dataGridView.Paint += (sender, e) =>
+            {
+                using (var pen = new Pen(Color.FromArgb(200, 200, 200), 1))
+                {
+                    e.Graphics.DrawRectangle(pen, dataGridView.Bounds.X + 4, dataGridView.Bounds.Y + 4, dataGridView.Bounds.Width - 8, dataGridView.Bounds.Height - 8);
+                }
+            };
+        }
+
+
+
+
+
+        private void BeautifyDataGridView(DataGridView dataGridView)
+        {
+            // Set the background color
+            dataGridView.BackgroundColor = Color.FromArgb(255, 248, 196); // Light Gold
+
+            // Set the header styles
+            DataGridViewCellStyle headerStyle = dataGridView.ColumnHeadersDefaultCellStyle;
+            headerStyle.BackColor = Color.FromArgb(255, 215, 0); // Gold
+            headerStyle.ForeColor = Color.White;
+            headerStyle.Font = new Font("Nova Square", 12F, FontStyle.Bold); // Standard system font, larger size
+            headerStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            headerStyle.Padding = new Padding(10, 5, 10, 5);
+
+            // Set the row styles
+            DataGridViewCellStyle rowStyle = dataGridView.RowsDefaultCellStyle;
+            rowStyle.BackColor = Color.White;
+            rowStyle.ForeColor = Color.DimGray; // Slightly darker text color
+
+            // Set the alternating row styles
+            DataGridViewCellStyle altRowStyle = dataGridView.AlternatingRowsDefaultCellStyle;
+            altRowStyle.BackColor = Color.FromArgb(255, 248, 196); // Light Gold
+
+            // Set the selection background color
+            DataGridViewCellStyle selectionStyle = dataGridView.DefaultCellStyle;
+            selectionStyle.SelectionBackColor = Color.FromArgb(184, 134, 11); // Dark Goldenrod
+            selectionStyle.SelectionForeColor = Color.White;
+
+            // Disable user-resizing of columns
+            dataGridView.AllowUserToResizeColumns = false;
+
+            // Add a subtle border for better separation
+            dataGridView.BorderStyle = BorderStyle.FixedSingle;
+
+            // Enhance grid lines
+            dataGridView.GridColor = Color.Silver;
+            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            // Add rounded corners to the header
+            dataGridView.EnableHeadersVisualStyles = false;
+
+            // Add a drop shadow effect
+            dataGridView.Margin = new Padding(0, 0, 0, 5); // Margin for the entire DataGridView
+            dataGridView.Paint += (sender, e) =>
+            {
+                using (var pen = new Pen(Color.FromArgb(200, 200, 200), 1))
+                {
+                    e.Graphics.DrawRectangle(pen, dataGridView.Bounds.X + 4, dataGridView.Bounds.Y + 4, dataGridView.Bounds.Width - 8, dataGridView.Bounds.Height - 8);
+                }
+            };
+        }
+
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -111,7 +219,7 @@ namespace ProjectPapyrus
             btnCopy.Visible = false;
             panelView.Visible = false;
             pnlOkView.Visible = false;
-            pnlCalendar.Visible = false;
+            panelCalendar.Visible = false;
             PanelcalenderVerifySuccess.Visible = false;
             if (viewBar.Height > 150)
             {
@@ -130,6 +238,89 @@ namespace ProjectPapyrus
             
         }
 
+        private void FutureReset()
+        {
+            FutureTextBox.Clear();
+            Calendar_viewTitle.Clear();
+            Calendar_viewAttach.Items.Clear();
+        }
+
+        private void FutureSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Calendar_viewTitle.Text))
+            {
+                MessageBox.Show("Title cannot be empty.");
+                return;
+            }
+
+            Guid senderUserID = UserManager.UserID;
+            sendDatePick.Value = DateTime.Now;
+            DateTime scheduleDate = sendDatePick.Value;
+
+            byte[] newEncryptionKey = GenerateRandomBytes(32); // Assuming a 256-bit key
+            byte[] newIV = GenerateRandomBytes(16); // Assuming a 128-bit IV
+
+            using (SqlConnection connection = new SqlConnection("Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;User ID=reflexorigin;Password=waytoGO.1;"))
+            {
+                connection.Open();
+                SqlTransaction transaction = null;
+
+                try
+                {
+                    transaction = connection.BeginTransaction();
+
+                    // Encrypt the note content
+                    string encryptedNoteContent = AesEncryptionHelper.EncryptString(
+                        FutureTextBox.Text,
+                        newEncryptionKey,
+                        newIV
+                    );
+
+                    // Insert note details into ScheduledNotes table
+                    using (SqlCommand insertCommand = new SqlCommand("INSERT INTO ScheduledNotes (NoteID, SenderUserID, RecipientUserID, NoteTitle, NoteContent, ScheduledDate, IsSent, EncryptionKey, IV) VALUES (@NoteID, @SenderUserID, @RecipientUserID, @NoteTitle, @NoteContent, @ScheduledDate, @IsSent, @EncryptionKey, @IV)", connection, transaction))
+                    {
+                        Guid noteId = Guid.NewGuid();
+                        insertCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteId });
+                        insertCommand.Parameters.Add(new SqlParameter("@SenderUserID", SqlDbType.UniqueIdentifier) { Value = senderUserID });
+                        insertCommand.Parameters.Add(new SqlParameter("@RecipientUserID", SqlDbType.UniqueIdentifier) { Value = recipientUserID });
+                        insertCommand.Parameters.Add(new SqlParameter("@NoteTitle", SqlDbType.NVarChar) { Value = Calendar_viewTitle.Text });
+                        insertCommand.Parameters.Add(new SqlParameter("@NoteContent", SqlDbType.NVarChar) { Value = encryptedNoteContent });
+                        insertCommand.Parameters.Add(new SqlParameter("@ScheduledDate", SqlDbType.DateTime) { Value = scheduleDate });
+                        insertCommand.Parameters.Add(new SqlParameter("@IsSent", SqlDbType.Bit) { Value = false });
+                        insertCommand.Parameters.Add(new SqlParameter("@EncryptionKey", SqlDbType.VarBinary) { Value = newEncryptionKey });
+                        insertCommand.Parameters.Add(new SqlParameter("@IV", SqlDbType.VarBinary) { Value = newIV });
+
+                        int rowsAffected = insertCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            string base64EncryptionKey = Convert.ToBase64String(newEncryptionKey);
+                            FutureEncKey.Text = base64EncryptionKey;
+                        }
+                        FutureEncKey.Visible = true;
+                        FutureCopy.Visible = true;
+                        transaction.Commit();
+                        FutureCancel.Visible = false;
+                        FutureSave.Visible = false;
+                        FutureAttach.Visible = false;
+                        FutureReset();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction?.Rollback();
+                    MessageBox.Show($"An error occurred while saving the note: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void VerifyReset()
+        {
+            NoteText.Clear();
+            NoteTT.Clear();
+            attachmentQueue.Clear();
+            new_attach.Items.Clear();
+        }
 
         private void verifybtn_Click(object sender, EventArgs e)
         {
@@ -205,10 +396,8 @@ namespace ProjectPapyrus
 
                         transaction.Commit();
                         NoteText.Clear();
-                        NoteTT.Clear();
-                        attachmentQueue.Clear();
-                        new_attach.Items.Clear();
                     }
+
                     catch (Exception ex)
                     {
                         transaction.Rollback();
@@ -241,7 +430,7 @@ namespace ProjectPapyrus
             panelNew.Visible = false;
             panelView.Visible = false;
             pnlOkView.Visible = false;
-            pnlCalendar.Visible = true;
+            panelCalendar.Visible = true;
             if (viewBar.Height > 150)
             {
                 viewBarTransition.Start();
@@ -252,11 +441,11 @@ namespace ProjectPapyrus
         {
             viewBarTransition.Start();
             viewSave.Text = "Save";
-            ViewCopy.Text = "Copy";
+           
             panelNew.Visible = false;
             panelView.Visible = false;
             pnlOkView.Visible = false;
-            pnlCalendar.Visible = false;
+            panelCalendar.Visible = false;
             PanelcalenderVerifySuccess.Visible = false;
         }
         bool viewBarExpand = false;
@@ -288,7 +477,7 @@ namespace ProjectPapyrus
             panelNew.Visible = false;
             panelView.Visible = false;
             pnlOkView.Visible = false;
-            pnlCalendar.Visible = false;
+            panelCalendar.Visible = false;
             PanelcalenderVerifySuccess.Visible = false;
             AtcName.Items.Clear();
             new_attach.Items.Clear();
@@ -297,16 +486,90 @@ namespace ProjectPapyrus
             {
                 viewBarTransition.Start();
             }
+            RefreshAllControls(this);
+        }
+
+        private void RefreshAllControls(Control control)
+        {
+            foreach (Control c in control.Controls)
+            {
+                if (c is TextBox)
+                {
+                    ((TextBox)c).Clear();
+                }
+                else if (c is ComboBox)
+                {
+                    ((ComboBox)c).SelectedIndex = -1;
+                }
+                else if (c is CheckBox)
+                {
+                    ((CheckBox)c).Checked = false;
+                }
+                else if (c is RichTextBox)
+                {
+                    ((RichTextBox)c).Clear();
+                }
+              
+                if (c.HasChildren)
+                {
+                    RefreshAllControls(c);
+                }
+            }
         }
 
 
+        private bool isBtnByKeyClicked = false;
 
         private void btnByKey_Click(object sender, EventArgs e)
         {
-            panelView.Visible = true;
-            pnlViewAction.Visible = true;
-            GridView.Visible = false;
+            try
+            {
+                panelView.Visible = true;
+                pnlViewAction.Visible = true;
+                GridView.Visible = false;
+                HaveKeyDataGrid.Visible = true;
+
+                Guid recipientUserID = UserManager.UserID;
+
+                using (SqlCommand command = new SqlCommand("SELECT * FROM RecipientScheduledNotes WHERE RecipientUserID = @UserID;", connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", recipientUserID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            if (isBtnByKeyClicked)
+                            {
+                                GridView.Rows.Clear();
+                            }
+
+                            while (reader.Read())
+                            {
+                                Guid noteID = reader.GetGuid(0);
+                                string guidString = noteID.ToString();
+                                int rowIndex = GridView.Rows.Add();
+
+                                GridView.Rows[rowIndex].Cells["ID"].Value = guidString;
+                                GridView.Rows[rowIndex].Cells["NoteTitle"].Value = reader["NoteTitle"];
+                                GridView.Rows[rowIndex].Cells["CreatedDate"].Value = reader["CreatedDate"];
+                                GridView.Rows[rowIndex].Cells["FileName"].Value = reader["FileName"];
+                            }
+
+                            GridView.CellDoubleClick += GridView_CellDoubleClick;
+
+                            isBtnByKeyClicked = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
@@ -318,43 +581,62 @@ namespace ProjectPapyrus
 
 
 
+        private bool isChooseClicked = false;
+
         private void Choose_Click(object sender, EventArgs e)
         {
-            panelView.Visible = true;
-            pnlViewAction.Visible = false;
-            GridView.Visible = true;
-            Continue.Visible = false;
-            Con_Pro.Visible = true;
-
-            Guid userID = UserManager.UserID;
-
-            using (SqlCommand command = new SqlCommand("SELECT * FROM NotesAttach WHERE userID = @UserID;", connection))
+            try
             {
-                command.Parameters.AddWithValue("@UserID", userID);
+                pnlOkView.Refresh();
+                panelView.Visible = true;
+                pnlViewAction.Visible = false;
+                GridView.Visible = true;
+                Continue.Visible = false;
+                Con_Pro.Visible = true;
+                HaveKeyDataGrid.Visible = false;
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                Guid userID = UserManager.UserID;
+
+                using (SqlCommand command = new SqlCommand("SELECT * FROM NotesAttach WHERE userID = @UserID;", connection))
                 {
-                    if (reader.HasRows)
+                    command.Parameters.AddWithValue("@UserID", userID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        GridView.Rows.Clear();
-
-                        while (reader.Read())
+                        if (reader.HasRows)
                         {
-                            Guid noteID = reader.GetGuid(0);
-                            string guidString = noteID.ToString();
-                            int rowIndex = GridView.Rows.Add();
+                            if (isChooseClicked)
+                            {
+                                GridView.Rows.Clear();
+                                inputKey.Clear();
+                            }
 
-                            GridView.Rows[rowIndex].Cells["ID"].Value = guidString;
-                            GridView.Rows[rowIndex].Cells["NoteTitle"].Value = reader["NoteTitle"];
-                            GridView.Rows[rowIndex].Cells["CreatedDate"].Value = reader["CreatedDate"];
-                            GridView.Rows[rowIndex].Cells["FileName"].Value = reader["FileName"];
+                            while (reader.Read())
+                            {
+                                Guid noteID = reader.GetGuid(0);
+                                string guidString = noteID.ToString();
+                                int rowIndex = GridView.Rows.Add();
+
+                                GridView.Rows[rowIndex].Cells["ID"].Value = guidString;
+                                GridView.Rows[rowIndex].Cells["NoteTitle"].Value = reader["NoteTitle"];
+                                GridView.Rows[rowIndex].Cells["CreatedDate"].Value = reader["CreatedDate"];
+                                GridView.Rows[rowIndex].Cells["FileName"].Value = reader["FileName"];
+                            }
+
+                            GridView.CellDoubleClick += GridView_CellDoubleClick;
+
+                            isChooseClicked = true;
                         }
-
-                        GridView.CellDoubleClick += GridView_CellDoubleClick;
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
 
         private string noteID;
@@ -386,6 +668,7 @@ namespace ProjectPapyrus
             if (hasAccess)
             {
                 ViewRichBox.Text = decryptedNoteContent;
+                
             }
             else
             {
@@ -448,7 +731,7 @@ namespace ProjectPapyrus
         {
             string encryptedNoteContent;
 
-            using (SqlCommand noteContentCommand = new SqlCommand("SELECT NoteContent FROM Notes WHERE NoteID = @NoteID", connection))
+            using (SqlCommand noteContentCommand = new SqlCommand("SELECT NoteTitle,NoteContent FROM Notes WHERE NoteID = @NoteID", connection))
             {
                 noteContentCommand.Parameters.AddWithValue("@NoteID", noteID); // Add this line to include noteID
 
@@ -456,7 +739,8 @@ namespace ProjectPapyrus
                 {
                     if (noteContentReader.Read())
                     {
-                        encryptedNoteContent = noteContentReader.GetString(0);
+                        encryptedNoteContent = noteContentReader.GetString(1);
+                        ViewTitle.Text = noteContentReader.GetString(0);
                         return AesEncryptionHelper.DecryptString(encryptedNoteContent, encryptionKey, iv);
                     }
                 }
@@ -529,73 +813,70 @@ namespace ProjectPapyrus
         
         private void Continue_Click(object sender, EventArgs e)
         {
-           /* panelView.Visible = false;
-            pnlOkView.Visible = true;
-
-            string providedKeyString = inputKey.Text;
-            string providedKey = null;
-            Guid matchingNoteID;
-            string noteContent;
-            List<string> attachmentFileNames;
-            byte[] iv = null;
-
-            using (SqlCommand keyCommand = new SqlCommand("SELECT IV FROM EncryptionKeys WHERE EncryptionKey = @UserProvidedKey", connection))
-            {
-                keyCommand.Parameters.AddWithValue("@UserProvidedKey", providedKeyString);
-
-                using (SqlDataReader keyReader = keyCommand.ExecuteReader())
-                {
-                    if (keyReader.Read())
-                    {
-                        //iv = Convert.ToBase64String(keyReader.GetString(0));
-
-                    }
-                }
-            }
-
-            bool hasAccess = CheckAccess(providedKey, iv, out matchingNoteID, out noteContent, out attachmentFileNames);
-
-            if (hasAccess)
-            {
-                ViewRichBox.Text = noteContent;
-            }
-            else
-            {
-                MessageBox.Show("Invalid key. Access denied.");
-            } */
+           
         }
-        
 
-        private void UpdateNoteContent(Guid noteID, string newContent)
-        {
-
-            string updateQuery = "UPDATE Notes SET NoteContent = @NewContent WHERE NoteID = @NoteID";
-
-            using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
-            {
-                updateCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteID });
-                updateCommand.Parameters.AddWithValue("@NewContent", newContent);
-
-                int rowsAffected = updateCommand.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
-                {
-                    MessageBox.Show("Note updated successfully.");
-                }
-                else
-                {
-                    MessageBox.Show("Failed to update the note.");
-                }
-            }
-        }
 
         private void viewSave_Click(object sender, EventArgs e)
         {
-            ViewEncryptKey.Visible = true;
-            ViewCopy.Visible = true;
             viewSave.Text = "Saved";
+            Guid senderUserID = UserManager.UserID;
 
+            using (SqlConnection connection = new SqlConnection("Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;User ID=reflexorigin;Password=waytoGO.1;Connect Timeout=30;"))
+            {
+                connection.Open();
+
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand keyCommand = new SqlCommand("SELECT EncryptionKey, IV FROM EncryptionKeys WHERE NoteID = @NoteID", connection, transaction))
+                        {
+                            keyCommand.Parameters.AddWithValue("@NoteID", noteID);
+
+                            using (SqlDataReader keyReader = keyCommand.ExecuteReader())
+                            {
+                                if (keyReader.Read())
+                                {
+                                    byte[] storedKeyBytes = (byte[])keyReader["EncryptionKey"];
+                                    byte[] iv = (byte[])keyReader["IV"];
+
+                                    string encryptedNoteContent = AesEncryptionHelper.EncryptString(
+                                        ViewRichBox.Text,
+                                        storedKeyBytes,
+                                        iv
+                                    );
+
+                                    keyReader.Close();
+
+                                    using (SqlCommand updateCommand = new SqlCommand("UPDATE Notes SET NoteContent = @NoteContent WHERE NoteID = @NoteID", connection, transaction))
+                                    {
+                                        updateCommand.Parameters.Add(new SqlParameter("@NoteContent", SqlDbType.NVarChar) { Value = encryptedNoteContent });
+                                        updateCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = Guid.Parse(noteID) });
+
+                                        updateCommand.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
+                            if (attachmentQueue.Any())
+                            {
+                                Upload(this, EventArgs.Empty);
+                            }
+                            transaction.Commit();
+                            Home.PerformClick();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
+
+
 
         private List<Attachment> attachmentQueue = new List<Attachment>();
 
@@ -624,8 +905,19 @@ namespace ProjectPapyrus
             new_attach.Items.Add(fileName);
         }
 
+        private void UploadFutureAttachmet(Guid noteID, string fileName, byte[] fileContent, string contentType)
+        {
+            Attachment attachment = new Attachment(noteID, fileName, fileContent, contentType);
+            attachmentQueue.Add(attachment);
+            Calendar_viewAttach.Items.Add(fileName);
+        }
 
-
+        private void UploadViewAttach(Guid noteID, string fileName, byte[] fileContent, string contentType)
+        {
+            Attachment attachment = new Attachment(noteID, fileName, fileContent, contentType);
+            attachmentQueue.Add(attachment);
+            AtcName.Items.Add(fileName);
+        }
 
         private void Upload(object sender, EventArgs e)
         {
@@ -639,33 +931,33 @@ namespace ProjectPapyrus
                
             try
             {
-                    foreach (Attachment attachment in attachmentQueue)
+                foreach (Attachment attachment in attachmentQueue)
+                {
+
+                    Guid noteID = actualNoteID;
+
+                    string insertQuery = "INSERT INTO Attachments (NoteID, FileName, FileContent, ContentType , userID) VALUES (@NoteID, @FileName, @FileContent, @ContentType , @userID)";
+
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
                     {
-
-                        Guid noteID = actualNoteID;
-
-                        string insertQuery = "INSERT INTO Attachments (NoteID, FileName, FileContent, ContentType , userID) VALUES (@NoteID, @FileName, @FileContent, @ContentType , @userID)";
-
-                        using (SqlCommand command = new SqlCommand(insertQuery, connection))
-                        {
-                            command.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteID });
-                            command.Parameters.AddWithValue("@FileName", attachment.FileName);
-                            command.Parameters.Add(new SqlParameter("@FileContent", SqlDbType.VarBinary) { Value = attachment.FileContent });
-                            command.Parameters.AddWithValue("@ContentType", attachment.ContentType);
-                            command.Parameters.AddWithValue("@userID", userID);
+                        command.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteID });
+                        command.Parameters.AddWithValue("@FileName", attachment.FileName);
+                        command.Parameters.Add(new SqlParameter("@FileContent", SqlDbType.VarBinary) { Value = attachment.FileContent });
+                        command.Parameters.AddWithValue("@ContentType", attachment.ContentType);
+                        command.Parameters.AddWithValue("@userID", userID);
 
                         int rowsAffected = command.ExecuteNonQuery();
 
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Attachment saved successfully.");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Failed to save the attachment.");
-                            }
+                        if (rowsAffected > 0)
+                        {
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to save the attachment.");
                         }
                     }
+                }
                 }
                 catch (Exception ex)
                 {
@@ -678,7 +970,54 @@ namespace ProjectPapyrus
             }
 
 
+        private void UploadFuture(object sender, EventArgs e)
+        {
+            if (attachmentQueue.Count == 0)
+            {
+                MessageBox.Show("There are no attachments to upload.");
+                return;
+            }
 
+            //Guid userID = UserManager.UserID;
+
+            try
+            {
+                foreach (Attachment attachment in attachmentQueue)
+                {
+
+                    Guid noteID = actualNoteID;
+
+                    string insertQuery = "INSERT INTO ScheduledNotes (NoteID, FileName, FileContent, ContentType) VALUES (@NoteID, @FileName, @FileContent, @ContentType)";
+
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteID });
+                        command.Parameters.AddWithValue("@FileName", attachment.FileName);
+                        command.Parameters.Add(new SqlParameter("@FileContent", SqlDbType.VarBinary) { Value = attachment.FileContent });
+                        command.Parameters.AddWithValue("@ContentType", attachment.ContentType);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to save the attachment.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while uploading the attachments: " + ex.Message);
+            }
+            finally
+            {
+                attachmentQueue.Clear();
+            }
+        }
 
 
         private void ViewCopy_Click(object sender, EventArgs e)
@@ -693,21 +1032,25 @@ namespace ProjectPapyrus
             {
                 viewBarTransition.Start();
             }
-            string mainFilePath = Path.Combine(Application.StartupPath, "C:\\Users\\Kibria\\Documents\\ProjectPapyrus1\\Resources\\HomePage.html");
-            string secondPageFilePath = Path.Combine(Application.StartupPath, "C:\\Users\\Kibria\\Documents\\ProjectPapyrus1\\Resources\\about.html");
+            if(!File.Exists("HomePage.html"))
+            {
+                File.WriteAllBytes("HomePage.html", Properties.Resources.HomePage);
+            }
+            if (!File.Exists("About.html"))
+            {
+                File.WriteAllBytes("About.html", Properties.Resources.about);
+            }
+            Process.Start("HomePage.html");
+            //string mainFilePath = Path.Combine(Application.StartupPath, "C:\\Users\\Kibria\\Documents\\ProjectPapyrus1\\Resources\\HomePage.html");
+           // string secondPageFilePath = Path.Combine(Application.StartupPath, "C:\\Users\\Kibria\\Documents\\ProjectPapyrus1\\Resources\\about.html");
 
-            OpenInDefaultBrowser(mainFilePath);
+            //OpenInDefaultBrowser(mainFilePath);
         }
 
-        private void OpenInDefaultBrowser(string filePath)
+       /* private void OpenInDefaultBrowser(string filePath)
         {
             Process.Start(filePath);
-        }
-
-        private void ViewCancel_Click(object sender, EventArgs e)
-        {
-
-        }
+        }*/
 
         private void addAtch_Click(object sender, EventArgs e)
         {
@@ -719,51 +1062,6 @@ namespace ProjectPapyrus
             
         }
 
-        private void cancel_Click(object sender, EventArgs e)
-        {
-            if (actualNoteID == Guid.Empty)
-            {
-                MessageBox.Show("No Note to cancel.");
-                return;
-            }
-
-            string connectionString = "Server=localhost;Database=ProjectProtectedPapyrus;Integrated Security=True;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                Guid noteIDToDelete = actualNoteID;
-
-                string deleteEncryptionKeysQuery = "DELETE FROM EncryptionKeys WHERE NoteID = @NoteID";
-
-                using (SqlCommand encryptionKeysCommand = new SqlCommand(deleteEncryptionKeysQuery, connection))
-                {
-                    encryptionKeysCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteIDToDelete });
-                    int rowsAffected = encryptionKeysCommand.ExecuteNonQuery();
-                }
-
-                string deleteNoteQuery = "DELETE FROM creation WHERE NoteID = @NoteID";
-
-                using (SqlCommand notesCommand = new SqlCommand(deleteNoteQuery, connection))
-                {
-                    notesCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteIDToDelete });
-                    int rowsAffected = notesCommand.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Note canceled and deleted successfully.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to delete the Note.");
-                    }
-                }
-            }
-
-            actualNoteID = Guid.Empty; 
-        }
-
         private void Menu_Load_1(object sender, EventArgs e)
         {
 
@@ -771,31 +1069,38 @@ namespace ProjectPapyrus
 
         private void NewAttach_Click_2(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            try
             {
-                openFileDialog.Title = "Open Attachment";
-                openFileDialog.Filter = "All files (*.*)|*.*";
-                openFileDialog.CheckFileExists = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    if (File.Exists(openFileDialog.FileName))
+                    openFileDialog.Title = "Open Attachment";
+                    openFileDialog.Filter = "All files (*.*)|*.*";
+                    openFileDialog.CheckFileExists = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        byte[] fileContent = File.ReadAllBytes(openFileDialog.FileName);
+                        if (File.Exists(openFileDialog.FileName))
+                        {
+                            byte[] fileContent = File.ReadAllBytes(openFileDialog.FileName);
 
-                        string fileName = openFileDialog.SafeFileName;
+                            string fileName = openFileDialog.SafeFileName;
 
-                        Guid noteID = actualNoteID; // Use actualNoteID directly as a Guid
+                            Guid noteID = actualNoteID; // Use actualNoteID directly as a Guid
 
-                        string contentType = MimeUtility.GetMimeMapping(fileName);
+                            string contentType = MimeUtility.GetMimeMapping(fileName);
 
-                        UploadAttachment(noteID, openFileDialog.SafeFileName, fileContent, contentType);
-                    }
-                    else
-                    {
-                        MessageBox.Show("The attachment file does not exist.");
+                            UploadAttachment(noteID, openFileDialog.SafeFileName, fileContent, contentType);
+                        }
+                        else
+                        {
+                            MessageBox.Show("The attachment file does not exist.");
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -827,11 +1132,8 @@ namespace ProjectPapyrus
         {
             try
             {
-                /* if(!verified)
-                 {
-                     lblUrecipient.Visible = true;
-                 }*/
-                pnlCalendar.Visible = false;
+
+                panelCalendar.Visible = false;
                 PanelcalenderVerifySuccess.Visible = true;
                 string recipientUsername = RecipientBox.Text;
 
@@ -964,51 +1266,160 @@ namespace ProjectPapyrus
            */
         }
 
-        private void FutureSave_Click(object sender, EventArgs e)
+        private void FutureCopy_Click(object sender, EventArgs e)
         {
-            Guid senderUserID = UserManager.UserID;
-            sendDatePick.Value = DateTime.Now;
-            DateTime scheduleDate = sendDatePick.Value;
+            Clipboard.SetText(FutureEncKey.Text);
+            Home.PerformClick();
+        }
 
-            byte[] newEncryptionKey = GenerateRandomBytes(32); // Assuming a 256-bit key
-            byte[] newIV = GenerateRandomBytes(16); // Assuming a 128-bit IV
+        private void GridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
-            using (SqlConnection connection = new SqlConnection("Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;User ID=reflexorigin;Password=waytoGO.1;"))
+        }
+
+        private void ViewEdit_Click(object sender, EventArgs e)
+        {
+            viewSave.Visible = true;
+            ViewATC.Visible = true;
+            ViewCancel.Visible = true;
+            ViewEdit.Visible = false;
+            ViewExit.Visible = false;
+        }
+
+        private void ViewExit_Click(object sender, EventArgs e)
+        {
+            Home.PerformClick();
+            RefreshAllControls(this);
+        }
+
+        private void FutureAttach_Click(object sender, EventArgs e)
+        {
+            try
             {
-                connection.Open();
-
-                // Encrypt the note content
-                string encryptedNoteContent = AesEncryptionHelper.EncryptString(
-                    FutureTextBox.Text,
-                    newEncryptionKey,
-                    newIV
-                );
-
-                // Insert note details into ScheduledNotes table
-                using (SqlCommand insertCommand = new SqlCommand("INSERT INTO ScheduledNotes (NoteID, SenderUserID, RecipientUserID, NoteTitle, NoteContent, ScheduledDate, IsSent, EncryptionKey, IV) VALUES (@NoteID, @SenderUserID, @RecipientUserID, @NoteTitle, @NoteContent, @ScheduledDate, @IsSent, @EncryptionKey, @IV)", connection))
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    Guid noteId = Guid.NewGuid();
-                    insertCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteId });
-                    insertCommand.Parameters.Add(new SqlParameter("@SenderUserID", SqlDbType.UniqueIdentifier) { Value = senderUserID });
-                    insertCommand.Parameters.Add(new SqlParameter("@RecipientUserID", SqlDbType.UniqueIdentifier) { Value = recipientUserID });
-                    insertCommand.Parameters.Add(new SqlParameter("@NoteTitle", SqlDbType.NVarChar) { Value = Calendar_viewTitle.Text });
-                    insertCommand.Parameters.Add(new SqlParameter("@NoteContent", SqlDbType.NVarChar) { Value = encryptedNoteContent });
-                    insertCommand.Parameters.Add(new SqlParameter("@ScheduledDate", SqlDbType.DateTime) { Value = scheduleDate });
-                    insertCommand.Parameters.Add(new SqlParameter("@IsSent", SqlDbType.Bit) { Value = false });
-                    insertCommand.Parameters.Add(new SqlParameter("@EncryptionKey", SqlDbType.VarBinary) { Value = newEncryptionKey });
-                    insertCommand.Parameters.Add(new SqlParameter("@IV", SqlDbType.VarBinary) { Value = newIV });
+                    openFileDialog.Title = "Open Attachment";
+                    openFileDialog.Filter = "All files (*.*)|*.*";
+                    openFileDialog.CheckFileExists = true;
 
-                    insertCommand.ExecuteNonQuery();
-
-                    int rowsAffected = insertCommand.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        string base64EncryptionKey = Convert.ToBase64String(newEncryptionKey);
-                        FutureEncKey.Text = base64EncryptionKey;
+                        if (File.Exists(openFileDialog.FileName))
+                        {
+                            byte[] fileContent = File.ReadAllBytes(openFileDialog.FileName);
+
+                            string fileName = openFileDialog.SafeFileName;
+
+                            Guid noteID = actualNoteID; // Use actualNoteID directly as a Guid
+
+                            string contentType = MimeUtility.GetMimeMapping(fileName);
+
+                            UploadFutureAttachmet(noteID, openFileDialog.SafeFileName, fileContent, contentType);
+                        }
+                        else
+                        {
+                            MessageBox.Show("The attachment file does not exist.");
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ViewATC_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Title = "Open Attachment";
+                    openFileDialog.Filter = "All files (*.*)|*.*";
+                    openFileDialog.CheckFileExists = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        if (File.Exists(openFileDialog.FileName))
+                        {
+                            byte[] fileContent = File.ReadAllBytes(openFileDialog.FileName);
+
+                            string fileName = openFileDialog.SafeFileName;
+
+                            Guid noteID = actualNoteID;
+
+                            string contentType = MimeUtility.GetMimeMapping(fileName);
+
+                            UploadViewAttach(noteID, openFileDialog.SafeFileName, fileContent, contentType);
+                        }
+                        else
+                        {
+                            MessageBox.Show("The attachment file does not exist.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ViewClear()
+        {
+            
+        }
+
+        private void ViewCancel_Click_1(object sender, EventArgs e)
+        {
+            ViewEdit.Visible = true;
+            ViewExit.Visible = true;
+            ViewATC.Visible = false;
+            viewSave.Visible = false;
+            ViewCancel.Visible = false;
+        }
+
+        private void cancel_Click_1(object sender, EventArgs e)
+        {
+            if (actualNoteID == Guid.Empty)
+            {
+                MessageBox.Show("No Note to cancel.");
+                return;
+            }
+
+            string connectionString = "Data Source=DESKTOP-IRO80SN,5126;Initial Catalog=ProtectedPapyrus;Persist Security Info=True;MultipleActiveResultSets=True;User ID=reflexorigin;Password=waytoGO.1;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                Guid noteIDToDelete = actualNoteID;
+
+                string deleteNoteQuery = "DELETE FROM creation WHERE NoteID = @NoteID";
+
+                using (SqlCommand notesCommand = new SqlCommand(deleteNoteQuery, connection))
+                {
+                    notesCommand.Parameters.Add(new SqlParameter("@NoteID", SqlDbType.UniqueIdentifier) { Value = noteIDToDelete });
+                    int rowsAffected = notesCommand.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        actualNoteID = Guid.Empty;
+                        Home.PerformClick();
+                    }
+                    else
+                    {
+                        Home.PerformClick();
+                    }
+                }
+            }          
+        }
+
+        private void FutureCancel_Click(object sender, EventArgs e)
+        {
+            PanelcalenderVerifySuccess.ResetText();
+            Home.PerformClick();
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)

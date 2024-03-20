@@ -77,8 +77,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1346, 719);
-            this.Controls.Add(this.PdfViewer);
             this.Controls.Add(this.ViewWeb);
+            this.Controls.Add(this.PdfViewer);
             this.Controls.Add(this.ViewImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

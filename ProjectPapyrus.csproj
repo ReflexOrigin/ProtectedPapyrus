@@ -148,12 +148,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="about.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="about.Designer.cs">
-      <DependentUpon>about.cs</DependentUpon>
-    </Compile>
     <Compile Include="control.cs" />
     <Compile Include="DocumentViewer.cs">
       <SubType>Form</SubType>
@@ -175,9 +169,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="about.resx">
-      <DependentUpon>about.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DocumentViewer.resx">
       <DependentUpon>DocumentViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -208,6 +199,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\about" />
+    <None Include="Resources\HomePage" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -227,8 +220,6 @@
   <ItemGroup>
     <Content Include="about.html" />
     <Content Include="HomePage.html" />
-    <None Include="Resources\about.html" />
-    <None Include="Resources\HomePage.html" />
     <Content Include="taskbar.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -256,4 +247,7 @@
     <Error Condition="!Exists('packages\PdfiumViewer.Native.x86.v8-xfa.2018.4.8.256\build\PdfiumViewer.Native.x86.v8-xfa.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PdfiumViewer.Native.x86.v8-xfa.2018.4.8.256\build\PdfiumViewer.Native.x86.v8-xfa.props'))" />
     <Error Condition="!Exists('packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\build\PdfiumViewer.Native.x86_64.v8-xfa.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\build\PdfiumViewer.Native.x86_64.v8-xfa.props'))" />
   </Target>
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
 </Project>
